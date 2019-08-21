@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+
+  <form name="userForm" ng-submit="username.sendUsername(userData,userForm.$valid)" role="form" novalidate>
+    <legend>Forgot Username</legend>
+
+    <div class="form-group">
+      <label for="username">E-mail:</label>
+      <input type="text" name="username" required ng-model="username.userData.email" class="form-control" id="username" placeholder="Username">
+    </div>
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+
+  </form>
+
+  <div class="jumbotron text-center" ng-show="username.loading">
+    <div class="container">
+      <p><span class="glyphicon glyphicon-repeat"></span></p>
+      <p>Loading ...</p>
+    </div>
+  </div>
+
+  <div class="alert alert-success" ng-show="username.successMsg">
+    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+    <strong>Success</strong> {{username.successMsg}}
+  </div>
+
+  <div class="alert alert-danger" ng-show="username.errorMsg">
+    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+    <strong>Error</strong> {{username.errorMsg}}
+  </div>
+</body>
+
+</html>

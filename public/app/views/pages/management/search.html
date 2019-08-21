@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <div class="page-header">
+    <h1>Search</h1>
+  </div>
+
+  <form class="navbar-form">
+    <input type="text" name="searchByUsername" ng-model="searchByUsername">
+    <button class="btn btn-default">Username</button>
+  </form>
+
+  <form class="navbar-form">
+    <input type="text" name="searchByEmail" ng-model="searchByEmail">
+    <button class="btn btn-default">E-mail</button>
+  </form>
+  <form class="navbar-form">
+    <input type="text" name="searchByName" ng-model="searchByName">
+    <button class="btn btn-default">Name</button>
+  </form>
+  <br>
+
+
+  <div class="navbar-form">
+    <button type="button" ng-click="management.advancedSearch(searchByUsername,searchByEmail,searchByName)" class="btn btn-default">Search</button>
+    <br><br>
+    <div class="btn-group">
+      <button type="button" class="btn btn-danger">Sort by</button>
+      <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <span class="caret"></span>
+        <span class="sr-only">Toggle Dropdown</span>
+      </button>
+
+      <ul class="dropdown-menu">
+        <li><a ng-click="management.sortOrder('username')" href="#">Username</a></li>
+        <li><a ng-click="management.sortOrder('email')" href="#">E-mail</a></li>
+        <li><a ng-click="management.sortOrder('name')" href="#">Name</a></li>
+      </ul>
+    </div>
+  </div>
+  <br>
+  <div ng-show="management.searchLimit === undefined">
+    <p><strong>Results:</strong> {{(management.users |filter: advancedSearchFilter | limitTo: management.searchLimit).length}}
+    </p>
+  </div>
+  <div ng-show="management.sort">
+    <p><strong>Sort by:</strong> {{management.sort}} </p>
+  </div>
+  <br>
+
+  <div class="panel panel-primary">
+    <!-- Default panel contents -->
+    <div class="panel-heading">User Management</div>
+    <div class="panel-body">
+      <p>Text goes here...</p>
+    </div>
+
+    <!-- Table -->
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Username</th>
+          <th>E-mail</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="person in management.users | filter: advancedSearchFilter | limitTo: management.searchLimit | orderBy: management.sort">
+          <td>{{person.name}}</td>
+          <td>{{person.username}}</td>
+          <td>{{person.email}}</td>
+
+          <td>
+            <a href="/edit/{{person._id}}">
+              <button type="button" ng-show="management.editAccess" class="btn btn-primary">Edit</button>
+            </a>
+            <button type="button" ng-click="management.deleteUser(person.username)" ng-show="management.deleteAccess" class="btn btn-danger">Danger</button>
+          </td>
+        </tr>
+
+      </tbody>
+    </table>
+  </div>
+  <div class="jumbotron text-center" ng-show="true">
+      <div class="container">
+        <p><span class="glyphicon glyphicon-repeat"></span></p>
+        <p>Loading ...</p>
+      </div>
+    </div>
+  <br> <br><br><br>
+
+
+</body>
+
+</html>

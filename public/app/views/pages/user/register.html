@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+
+  <form name="regForm" ng-submit="register.regUser(regData,regForm.$valid,confirmed)" role="form" novalidate>
+    <legend> User Registration</legend>
+
+    <div class="form-group" ng-class="{'has-success':(regForm.name.$valid && !regForm.name.$pristine),
+    'has-error':(!regForm.name.$valid && !regForm.name.$pristine) || (!regForm.name.$valid && regForm.$submitted)}">
+      <label for="name">Name</label>
+      <input type="text" name="name" ng-model="register.regData.name" class="form-control" id="name" placeholder="Name" required
+        ng-pattern="/^(([a-zA-Z]{3,20})+[ ]+([a-zA-Z]{3,20})+)+$/" ng-minlength="3" ng-maxlength="20">
+      <p class="help-block" ng-show="(!regForm.name.$pristine && regForm.name.$error.required) || (regForm.$submitted && regForm.name.$error.required)">
+        Field required
+      </p>
+
+      <ul class="help-block" ng-show="(!regForm.name.$pristine && regForm.name.$error.pattern) || (!regForm.name.$pristine && regForm.name.$error.maxlength)">
+        <li class="">Must have a space in between first and last name</li>
+        <li class="">Must not contain any special characters</li>
+        <li class="">Must not contain any numbers</li>
+        <li class="">Must be at least 3 characters but no more than 20</li>
+      </ul>
+
+    </div>
+    <div class="form-group" ng-class="{'has-success':(regForm.username.$valid && !regForm.username.$pristine && !register.usernameInvalid),
+    'has-error':(!regForm.username.$valid && !regForm.username.$pristine) || (!regForm.username.$valid && regForm.$submitted) || register.usernameInvalid}">
+      <label for="username">Username</label>
+      <input type="text" name="username" ng-blur="register.checkUsername(regData)" ng-model="register.regData.username" class="form-control"
+        id="username" placeholder="Username">
+      <p class="help-block" ng-show="register.usernameMsg">{{register.usernameMsg}}</p>
+    </div>
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input type="text" ng-blur="register.checkEmail(regData)" name="email" ng-model="register.regData.email" class="form-control"
+        id="email" placeholder="Email">
+      <p class="help-block" ng-show="register.emailMsg">{{register.emailMsg}}</p>
+    </div>
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input type="text" name="password" ng-model="firstPassword" class="form-control" id="password" placeholder="Password">
+    </div>
+    <div class="form-group">
+      <label for="password">Confirm</label>
+      <input type="text" match="{{[firstPassword]}}" ng-change="register.regData.password = confirm" ng-model="confirm" class="form-control"
+        id="password" placeholder="Password">
+      <p ng-show="!confirmed">Password do not match</p>
+    </div>
+
+
+    <button type="submit" class="btn btn-primary">Register</button>
+  </form>
+
+  <div class="jumbotron text-center" ng-show="register.loading">
+    <div class="container">
+      <p><span class="glyphicon glyphicon-repeat"></span></p>
+      <p>Loading ...</p>
+    </div>
+  </div>
+
+
+  <div class="alert alert-success" ng-show="register.successMsg">
+    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+    <strong>Success</strong> {{register.successMsg}}
+  </div>
+
+  <div class="alert alert-danger" ng-show="register.errorMsg">
+    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button> {{register.errorMsg}}
+  </div>
+
+</body>
+
+</html>

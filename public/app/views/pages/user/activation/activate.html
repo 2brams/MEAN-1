@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <div class="page-header">
+    <h1>Acount activation</h1>
+  </div>
+  <br>
+
+  <div class="alert alert-success" ng-show="email.successMsg">
+    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+    <strong>Success</strong> {{email.successMsg}}
+  </div>
+
+  <div class="alert alert-danger" ng-show="email.errorMsg">
+    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+    <strong>Error</strong> {{email.errorMsg}}
+  </div>
+
+</body>
+
+</html>
